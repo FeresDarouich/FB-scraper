@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.db  
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./main.py
+      - ./templates/results.html
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=sqlite:///./mydb.db
+
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    volumes:
+      - ./mydb.db
